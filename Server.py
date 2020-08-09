@@ -100,7 +100,6 @@ class Server:
         time_out = self.timeOut
         while time.time() - self.last_update < time_out:
             pass
-        #self.kill_thread(self.vote_call)
         self.candidate_state = kthread.KThread(target=self.candidate, args= ())
         self.candidate_state.start()
         #self.candidate()
@@ -109,7 +108,6 @@ class Server:
                 self.last_update = time.time()
                 while time.time() - self.last_update < self.timeOut: 
                     pass
-                #self.kill_thread(self.vote_call)
                 self.candidate_state = kthread.KThread(target=self.candidate, args= ())
                 self.candidate_state.start()
                 #self.candidate()
