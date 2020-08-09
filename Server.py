@@ -12,7 +12,7 @@ class Server:
     def __init__(self, id, config, clientId, clientConfig):
         self.id = id
         self.state = "follower"
-
+        
         self.peers = []
         self.voters = []
         self.numVotes = 0
@@ -35,14 +35,12 @@ class Server:
         '''Socket'''
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.sock.bind(("",self.port))
-
         
         '''Threads'''
         self.follower_state = kthread.KThread(target=self.follower, args= ())
         self.candidate_state = kthread.KThread(target=self.candidate, args= ())
         self.leader_state = kthread.KThread(target = self.leader, args = ())
         
-
         self.rpc_load = kthread.KThread(target = self.rpc_socket, args = (RPC_process,))
 
         self.vote_call = kthread.KThread(target = self.request_vote, args =())
@@ -50,13 +48,12 @@ class Server:
         self.entry_call = kthread.KThread(target = self.request_entry, args =())
 
 
-
     def load_config(self, config):
 
         configs = json.load(open(config))
         ports = configs["port"]
         ids = configs["id"]
-
+        
         self.port = ports[self.id - 1]
 
         self.nodePorts = {}
@@ -65,13 +62,11 @@ class Server:
             if nid != self.id:
                 self.peers.append(nid)
 
-
     def send_socket(self, msg, recv):
         self.sock.sendto(pickle.dumps(msg), ("", recv))
 
     def recv_socket(self):
         return self.sock.recvfrom(1024)
-
 
     def rpc_socket(self, process):
         while True:
@@ -82,7 +77,6 @@ class Server:
                 rpc_thread.start()
             except Exception as e:
                 print(e)
-
         self.sock.close()
 
     def kill_thread(self, thrd):
@@ -109,9 +103,7 @@ class Server:
         while time.time() - self.last_update < time_out:
             pass
         #self.kill_thread(self.vote_call)
-
         self.candidate()
-
         while True:
             try:          
                 self.last_update = time.time()
@@ -132,8 +124,7 @@ class Server:
             self.vote_call.start()
 
 
-    def leader(self):
-        
+    def leader(self):     
         self.state = "leader"
         print("\n<Term Update>: Term {}'s Leader[{}]. / {} /\n".format(self.currentTerm, self.id, time.asctime()))
         self.save_state()
@@ -145,15 +136,13 @@ class Server:
         self.currentTerm = term
 
         if self.state == "candidate":
-
             self.kill_thread(self.vote_call)
             self.kill_thread(self.candidate_state)
-
+            
             self.follower_state = kthread.KThread(target=self.follower, args= ())
             self.follower_state.start()
 
         elif self.state == "leader":
-
             self.kill_thread(self.heartbeat_call)
             self.kill_thread(self.leader_state)
             
@@ -162,7 +151,6 @@ class Server:
 
 
     def request_vote(self):
-
         print("<Election Timeout>: Candidate[{}] update election to term[{}].".format(self.id, self.currentTerm, time.asctime()))
         self.state = "candidate"
         self.voters = self.peers.copy()
@@ -179,7 +167,6 @@ class Server:
             
 
     def send_heartbeat(self):
-
         self.state = "leader"
         while True:
             try:
@@ -193,7 +180,6 @@ class Server:
 
 
     def request_entry(self):
-
         self.state = "leader"
         #clientId = 111
         #clientConfig = 10000
