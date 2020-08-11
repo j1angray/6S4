@@ -7,8 +7,8 @@ import pickle
 import kthread
 import unittest
 
-from ..Client import *
-import ..RPC import *
+from Client import *
+import RPC import *
 from ClientActions import *
 from mock import patch
 
