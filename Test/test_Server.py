@@ -1,23 +1,25 @@
 import Server
 from Server import Server
-import __main__
+
 import __main__
 import _bootlocale
-import codecs
-from codecs import BufferedIncrementalDecoder
-from codecs import IncrementalEncoder
-import json
-from json import JSONDecodeError
-import kthread
-from mock import patch
+
+import time
 import pickle
 import random
 import socket
+import kthread
 import sys
+import unittest
+
 import threading
 from threading import Barrier
-import time
-import unittest
+import json
+from json import JSONDecodeError
+import codecs
+from codecs import BufferedIncrementalDecoder
+from codecs import IncrementalEncoder
+from mock import patch
 
 
 class ServerTest(unittest.TestCase):
