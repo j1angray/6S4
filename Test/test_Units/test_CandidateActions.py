@@ -7,7 +7,7 @@ import pickle
 import kthread
 import unittest
 
-from ..RPC import *
+from RPC import *
 from CandidateActions import *
 from mock import patch
 
