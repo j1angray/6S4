@@ -1,6 +1,12 @@
 # 654 Project
 
 
+### Subject
+
+A Python Implementation of Raft Consensus
+
+
+
 ### Set up
 
 1. Modify the script written in the run.sh file, change the Folder address after the cd command to corresponding local path.
