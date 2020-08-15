@@ -17,11 +17,11 @@ A Python Implementation of Raft Consensus
 
 ### Operation guidance
 
-1. After entering the specified folder in terminal, then run the run.sh file.
+1. After entering the specified folder in terminal, then run the run.sh file. One client (Client.py) and several servers (Node.py) will start operate.
 
-2. Multiple terminal windows will be generated to simulate distrubuted nodes which will contain multiple servers and a single client.
+2. Multiple terminal windows where node.py files are running will be generated to simulate distrubuted nodes which will contain multiple servers and a single client.
 
-3. Manually shutdown one terminal window to see how Raft consensus protocol works by reading the print information of RPC communication.
+3. Manually shutdown one terminal window as indicating the death of a node to see how other nodes works through Raft consensus protocol by reading the print information of RPC communication.
 
 
 
